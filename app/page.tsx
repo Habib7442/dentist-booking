@@ -68,7 +68,10 @@ export default function Home() {
             ))}
           </div>
           <div className="flex items-center gap-3">
-            <Button className="hidden sm:flex h-10 px-5 text-[13px] font-semibold rounded-lg bg-primary hover:bg-primary/90">
+            <Button 
+              className="hidden sm:flex h-10 px-5 text-[13px] font-semibold rounded-lg bg-primary hover:bg-primary/90"
+              onClick={() => window.dispatchEvent(new CustomEvent('start-vapi-call'))}
+            >
               Book Appointment
             </Button>
             <button className="md:hidden p-2" onClick={() => setMobileMenu(!mobileMenu)}>
