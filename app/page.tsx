@@ -22,8 +22,11 @@ import {
   Menu,
   X,
   Play,
-  ArrowUpRight
+  ArrowUpRight,
+  Siren
 } from "lucide-react"
+
+import EmergencyBanner from "@/components/emergency-banner"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -46,12 +49,13 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
+      <EmergencyBanner />
 
       {/* ─── NAVBAR ─── */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      <nav className={`fixed w-full z-50 transition-all duration-300 ${
         scrolled 
-          ? "py-3 bg-white/95 backdrop-blur-sm shadow-[0_1px_0_0_rgba(0,0,0,0.05)]" 
-          : "py-5 bg-transparent"
+          ? "top-0 py-3 bg-white/95 backdrop-blur-sm shadow-[0_1px_0_0_rgba(0,0,0,0.05)]" 
+          : "top-[48px] py-5 bg-transparent"
       }`}>
         <div className="max-w-[1200px] mx-auto px-6 flex justify-between items-center">
           <div className="flex items-center gap-2.5">
@@ -434,6 +438,59 @@ export default function Home() {
             <Button className="h-12 px-8 rounded-xl font-semibold bg-primary shadow-md text-[13px]">
               Book A Session Now
             </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── SMILE TRANSFORMATIONS ─── */}
+      <section className="py-24 bg-slate-50/50">
+        <div className="max-w-[1200px] mx-auto px-6 space-y-12">
+          <div className="text-center max-w-2xl mx-auto space-y-4">
+            <Badge variant="outline" className="text-primary border-primary/20 bg-primary/5 font-bold uppercase tracking-wider px-4 py-1.5 h-auto text-[10px]">Real Results</Badge>
+            <h2 className="text-3xl font-bold">Smile Transformations</h2>
+            <p className="text-[13px] text-slate-500 font-medium">
+              Explore the surgical and cosmetic excellence of our specialists through these real patient outcomes.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="flex flex-col gap-4">
+              <div className="relative aspect-[4/3] rounded-3xl overflow-hidden border border-slate-200 shadow-xl">
+                <Image 
+                  src="/transformation-1.png" 
+                  alt="Professional Whitening Results" 
+                  fill 
+                  className="object-cover"
+                />
+              </div>
+              <div className="text-center">
+                <h4 className="text-[15px] font-bold text-slate-800">Professional Whitening</h4>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <div className="relative aspect-[4/3] rounded-3xl overflow-hidden border border-slate-200 shadow-xl">
+                <Image 
+                  src="/transformation-2.png" 
+                  alt="Dental Implants Results" 
+                  fill 
+                  className="object-cover"
+                />
+              </div>
+              <div className="text-center">
+                <h4 className="text-[15px] font-bold text-slate-800">Dental Implants</h4>
+              </div>
+            </div>
+          </div>
+          
+          <div className="flex flex-col items-center gap-5 pt-6">
+             <p className="text-[12px] text-slate-400 font-bold uppercase tracking-widest italic font-medium">Experience similar results</p>
+             <Button 
+               className="bg-primary hover:bg-primary/90 text-[13px] font-bold h-11 px-10 rounded-xl transition-all hover:scale-105 active:scale-95"
+               onClick={() => window.dispatchEvent(new CustomEvent('start-vapi-call'))}
+             >
+               Start Your Consultation
+             </Button>
           </div>
         </div>
       </section>

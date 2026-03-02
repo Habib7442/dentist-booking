@@ -8,13 +8,19 @@ export async function POST(req: Request) {
     const { message } = await req.json();
     
     // Vapi tool calls usually send data inside a toolCall structure
-    // but we can also set up Sarah to just send the arguments
-    const { name, phone, problem, slot, service } = message?.toolCalls?.[0]?.function?.arguments || {};
+    console.log("--- New Incoming Booking Request ---");
+    console.log("Full Request Body:", JSON.stringify(message, null, 2));
+
+    const { name, phone, problem, slot, service } = message?.toolCalls?.[0]?.function?.arguments || message || {};
+    
+    console.log("Extracted Booking Data:", { name, phone, problem, slot, service });
 
     if (!name || !phone) {
+      console.error("Validation Error: Missing name or phone");
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
+    console.log("Attempting to send email via Resend...");
     const emailResponse = await resend.emails.send({
       from: 'DentCare Booking <onboarding@resend.dev>',
       to: 'webdevelopment7442@gmail.com',
@@ -33,7 +39,11 @@ export async function POST(req: Request) {
       `
     });
 
-    console.log("Email sent successfully:", emailResponse);
+    if (emailResponse.error) {
+      console.error("Resend Response Error:", emailResponse.error);
+    } else {
+      console.log("Resend Success Response:", emailResponse.data);
+    }
 
     return NextResponse.json({ 
       success: true, 
